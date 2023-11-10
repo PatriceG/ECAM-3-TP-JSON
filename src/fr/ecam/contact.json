@@ -1,0 +1,12 @@
+{
+    "id": 1,
+    "nom": "Doe",
+    "prénom": "John",
+    "date-de-naissance": "1980-01-20T12:10:43.0Z",
+    "adresses": [
+{
+    "type": "perso",
+    "ville": "Bruz"
+}
+    ]
+}
