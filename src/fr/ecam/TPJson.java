@@ -4,50 +4,57 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Date;
 import java.util.Iterator;
 
-import org.json.simple.parser.ParseException;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 public class TPJson {
 
-	public void enrichirArbre() throws IOException, ParseException {
+	public void enrichirArbre() throws IOException {
 		InputStream in = getClass().getResourceAsStream("contact.json");
-		JSONParser jsonParser = new JSONParser();
-		
-		// crée un arbre depuis le flux JSON
-		JSONObject  root = (JSONObject)jsonParser.parse(new InputStreamReader(in));
+		//lit le fichier dans une String, peu efficace mais suffisant pour notre exemple
+		String data = new String(Files.readAllBytes(Paths.get("contact.json")));
+
+		// crée un arbre depuis le flux JSON, dont la racine est le contact lu depuis le fichier json
+		JSONObject root = new JSONObject(data);
 				
 		// recherche un attribut par son nom	
-		System.out.println("Nom: " + root.get("nom"));
+		System.out.println("Nom: " + root.getString("nom"));
 		
-		//récupération du noeud adresses (tableau, de type JSONArray)
-		JSONArray  adresses = (JSONArray)root.get("adresses");
+		//TODO récupération du noeud adresses (tableau, de type JSONArray)
 		
 		// enrichissement de l'arbre JSON
-		//TODO créer un nouvel objet de type JSONObjct
+		//TODO créer un nouvel objet de type JSONObject
 		//ajouter les attributs type, ville et codePostal
-		//ajouter cet élément au noeud adresses
+		//ajouter cet élément au noeud adresses (via la méthode put)
 
 		
 		
-		//affichage de la liste d'adresses
+		//TODO: affichager la liste d'adresses
+		//via un iterator et une boucle while (cf cours slide 57)
 		System.out.println("adresses: ");
-		Iterator iterator = adresses.iterator();
-		while (iterator.hasNext()) {
-			JSONObject adresse = (JSONObject) iterator.next();
-			System.out.println("Type: " + adresse.get("type"));
-			System.out.println("Ville: " + adresse.get("ville"));
-			System.out.println("CodePostal: " + adresse.get("codePostal"));
-		}
+
+		
+		//TODO ajout au contact, d'un tableau de messages avec un message
+		//créer JSONArray messages
+		//l'ajouter à root sous le nom "messages"
+		//créer un JSONObject message
+		//y ajouter un attribut "texte" avec un texte quelconque
+		//y ajouter un attribute "timestamp" avec la valeur: ew Date().toGMTString()
+		//note: la méthode toGMTString() est deprecated, ça n'est pas grave pour cet exemple.
+		
+		
+		
 		
 		
 		//sauvegarde dans un nouveau fichier contact_mod.json à la racine du projet
 		FileWriter fw = new FileWriter("contact_mod.json");
-		fw.write(root.toJSONString());		
+		root.write(fw,4,0);		
 		fw.close();
 
 	}
