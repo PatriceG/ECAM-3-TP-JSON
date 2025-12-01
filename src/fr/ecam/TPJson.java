@@ -36,7 +36,7 @@ public class TPJson {
 		
 		
 		//TODO: affichager la liste d'adresses
-		//via un iterator et une boucle while (cf cours slide 57)
+		//via un iterator et une boucle while (cf cours slide 59)
 		System.out.println("adresses: ");
 
 		
